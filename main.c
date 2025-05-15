@@ -45,7 +45,7 @@ void print_array() {
 
 
 
-// thread function for t1 and t2
+// sorting thread function for t1 and t2
 void* sort(void* arg) {
 
     char* type = (char*) arg;   // "T1" or "T2"
@@ -142,10 +142,14 @@ void* sort(void* arg) {
         pthread_mutex_unlock(&mutex);
     }
 
-    if (id == 0)
-        printf("Thread T1: total number of swaps = %d\n", t1_total_swaps);
-    else
-        printf("Thread T2: total number of swaps = %d\n", t2_total_swaps);
+    pthread_t tid = pthread_self();
+
+    if (id == 0) {
+        printf("Thread ID %p (T1): total number of swaps = %d\n", tid, t1_total_swaps);
+
+    } else {
+        printf("Thread ID %p (T2): total number of swaps = %d\n", tid, t2_total_swaps);
+    }
 
     
     return NULL;
